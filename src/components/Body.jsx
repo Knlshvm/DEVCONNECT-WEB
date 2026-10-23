@@ -3,15 +3,14 @@ import Navbar from "./Navbar";
 import { Outlet } from "react-router";
 import Login from "./Login";
 import Profile from "./Profile";
+import Footer from "./Footer";
 
 const Body = () => {
   return (
     <div>
       <Navbar />
-      <Outlet>
-        <Login />
-        <Profile />
-      </Outlet>
+      <Outlet />
+      <Footer />
     </div>
   );
 };
