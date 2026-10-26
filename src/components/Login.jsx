@@ -7,7 +7,7 @@ import { BASE_URL } from "../utils/constant";
 
 const Login = () => {
   const [emailId, setEmailID] = useState("Kunal@gmail.com");
-  const [password, setPassword] = useState("Kunal@123");
+  const [password, setPassword] = useState("Password@123");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,8 +16,8 @@ const Login = () => {
       const res = await axios.post(
         BASE_URL + "/login",
         {
-          emailId: "kunal@gmail.com",
-          password: "Password@123",
+          emailId: emailId,
+          password: password,
         },
         {
           withCredentials: true,
@@ -29,6 +29,7 @@ const Login = () => {
       console.error(error);
     }
   };
+
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 ">
