@@ -25,7 +25,7 @@ const Login = () => {
         },
       );
       dispatch(addUser(res.data));
-      navigate("/feed");
+      navigate("/");
     } catch (error) {
       setError(error?.response?.data || "something went wrong");
       console.error(error);
@@ -34,37 +34,39 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 ">
-        <legend className="fieldset-legend">Login</legend>
+      <div className="card bg-base-200 w-96 shadow-lg border border-base-300">
+        <div className="card-body gap-5">
+          <h2 className="card-title text-2xl justify-center">Sign In</h2>
 
-        <label className="label">Email</label>
-        <input
-          type="email"
-          className="input"
-          placeholder="Email"
-          value={emailId}
-          onChange={(e) => {
-            setEmailID(e.target.value);
-          }}
-        />
+          <div>
+            <label className="label text-sm">Email</label>
+            <input
+              type="email"
+              className="input input-bordered w-full bg-base-100"
+              placeholder="you@example.com"
+              value={emailId}
+              onChange={(e) => setEmailID(e.target.value)}
+            />
+          </div>
 
-        <label className="label">Password</label>
-        <input
-          type="password"
-          className="input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+          <div>
+            <label className="label text-sm">Password</label>
+            <input
+              type="password"
+              className="input input-bordered w-full bg-base-100"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <p className="text-red-500 font-serif">{error}</p>
+          {error && <p className="text-error text-sm">{error}</p>}
 
-        <button className="btn btn-neutral mt-4" onClick={handleLogin}>
-          Login
-        </button>
-      </fieldset>
+          <button className="btn btn-primary w-full mt-2" onClick={handleLogin}>
+            Sign In
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,6 @@ const Body = () => {
   const navigate = useNavigate();
 
   const fetchUser = async () => {
-    console.log(BASE_URL + "/profile/view");
     if (userData) return;
     try {
       const res = await axios.get(BASE_URL + "/profile/view", {
