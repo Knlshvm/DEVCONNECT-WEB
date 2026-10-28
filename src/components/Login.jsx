@@ -62,7 +62,9 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
       <div className="card bg-base-200 w-96 shadow-lg border border-base-300">
         <div className="card-body gap-5">
-          <h2 className="card-title text-2xl justify-center">Sign In</h2>
+          <h2 className="card-title text-2xl justify-center">
+            {isLogin ? "Log In" : "Sign Up"}
+          </h2>
 
           {!isLogin && (
             <>
