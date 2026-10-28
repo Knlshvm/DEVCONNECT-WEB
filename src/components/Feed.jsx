@@ -11,14 +11,15 @@ const Feed = () => {
 
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
+
   const fetchData = async () => {
-    if (feedData) return;
+    if (feedData.length > 0) return;
     try {
       setLoader(true);
       const res = await axios.get(BASE_URL + "/user/feed", {
         withCredentials: true,
       });
-      dispatch(addFeed(res.data));
+      dispatch(addFeed(res.data.data));
       setLoader(false);
     } catch (err) {
       setError(err?.response?.data || "something went wrong ");
@@ -44,9 +45,9 @@ const Feed = () => {
       </div>
     );
   }
-  return feedData ? (
+  return feedData.length > 0 ? (
     <div className="flex items-center justify-center py-10">
-      <UserCard feed={feedData?.data[0]} />
+      <UserCard feed={feedData?.[0]} />
     </div>
   ) : (
     <div className="flex items-center justify-center py-20">

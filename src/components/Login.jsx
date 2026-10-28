@@ -6,9 +6,13 @@ import { useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constant";
 
 const Login = () => {
-  const [emailId, setEmailID] = useState("Kunal@gmail.com");
-  const [password, setPassword] = useState("Password@123");
+  const [emailId, setEmailID] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,12 +36,58 @@ const Login = () => {
     }
   };
 
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        {
+          firstName,
+          lastName,
+          emailId,
+          password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      dispatch(addUser(res.data));
+      navigate("/profile");
+    } catch (error) {
+      setError(error.response.data);
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
       <div className="card bg-base-200 w-96 shadow-lg border border-base-300">
         <div className="card-body gap-5">
           <h2 className="card-title text-2xl justify-center">Sign In</h2>
 
+          {!isLogin && (
+            <>
+              <div>
+                <label className="label text-sm">First Name</label>
+                <input
+                  type="input"
+                  className="input input-bordered w-full bg-base-100"
+                  placeholder="john"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="label text-sm">Last Name</label>
+                <input
+                  type="input"
+                  className="input input-bordered w-full bg-base-100"
+                  placeholder="john@example.com"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </>
+          )}
           <div>
             <label className="label text-sm">Email</label>
             <input
@@ -62,10 +112,22 @@ const Login = () => {
 
           {error && <p className="text-error text-sm">{error}</p>}
 
-          <button className="btn btn-primary w-full mt-2" onClick={handleLogin}>
-            Sign In
+          <button
+            className="btn btn-primary w-full mt-2"
+            onClick={isLogin ? handleLogin : handleSignUp}
+          >
+            {isLogin ? "Sign In" : "Sign Up"}
           </button>
         </div>
+
+        <p
+          className="text-center cursor-pointer underline text-primary italic"
+          onClick={() => setIsLogin((prev) => !prev)}
+        >
+          {isLogin
+            ? "New to platform? Create Account"
+            : "Already have an accoun? Login"}
+        </p>
       </div>
     </div>
   );
